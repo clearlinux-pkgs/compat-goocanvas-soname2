@@ -4,18 +4,15 @@
 #
 Name     : compat-goocanvas-soname2
 Version  : 2.0.4
-Release  : 21
+Release  : 22
 URL      : https://download.gnome.org/sources/goocanvas/2.0/goocanvas-2.0.4.tar.xz
 Source0  : https://download.gnome.org/sources/goocanvas/2.0/goocanvas-2.0.4.tar.xz
 Summary  : A GTK+ canvas widget using cairo
 Group    : Development/Tools
 License  : LGPL-2.0
-Requires: compat-goocanvas-soname2-data = %{version}-%{release}
 Requires: compat-goocanvas-soname2-lib = %{version}-%{release}
 Requires: compat-goocanvas-soname2-license = %{version}-%{release}
 Requires: compat-goocanvas-soname2-locales = %{version}-%{release}
-Requires: compat-goocanvas-soname2-python = %{version}-%{release}
-Requires: compat-goocanvas-soname2-python3 = %{version}-%{release}
 BuildRequires : buildreq-gnome
 BuildRequires : docbook-xml
 BuildRequires : gettext
@@ -34,38 +31,9 @@ Welcome to GooCanvas
 ====================
 (a cairo-based canvas widget for GTK+)
 
-%package data
-Summary: data components for the compat-goocanvas-soname2 package.
-Group: Data
-
-%description data
-data components for the compat-goocanvas-soname2 package.
-
-
-%package dev
-Summary: dev components for the compat-goocanvas-soname2 package.
-Group: Development
-Requires: compat-goocanvas-soname2-lib = %{version}-%{release}
-Requires: compat-goocanvas-soname2-data = %{version}-%{release}
-Provides: compat-goocanvas-soname2-devel = %{version}-%{release}
-Requires: compat-goocanvas-soname2 = %{version}-%{release}
-
-%description dev
-dev components for the compat-goocanvas-soname2 package.
-
-
-%package doc
-Summary: doc components for the compat-goocanvas-soname2 package.
-Group: Documentation
-
-%description doc
-doc components for the compat-goocanvas-soname2 package.
-
-
 %package lib
 Summary: lib components for the compat-goocanvas-soname2 package.
 Group: Libraries
-Requires: compat-goocanvas-soname2-data = %{version}-%{release}
 Requires: compat-goocanvas-soname2-license = %{version}-%{release}
 
 %description lib
@@ -88,24 +56,6 @@ Group: Default
 locales components for the compat-goocanvas-soname2 package.
 
 
-%package python
-Summary: python components for the compat-goocanvas-soname2 package.
-Group: Default
-Requires: compat-goocanvas-soname2-python3 = %{version}-%{release}
-
-%description python
-python components for the compat-goocanvas-soname2 package.
-
-
-%package python3
-Summary: python3 components for the compat-goocanvas-soname2 package.
-Group: Default
-Requires: python3-core
-
-%description python3
-python3 components for the compat-goocanvas-soname2 package.
-
-
 %prep
 %setup -q -n goocanvas-2.0.4
 cd %{_builddir}/goocanvas-2.0.4
@@ -115,7 +65,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622828202
+export SOURCE_DATE_EPOCH=1622832072
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -135,98 +85,92 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1622828202
+export SOURCE_DATE_EPOCH=1622832072
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-goocanvas-soname2
 cp %{_builddir}/goocanvas-2.0.4/COPYING %{buildroot}/usr/share/package-licenses/compat-goocanvas-soname2/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
 %make_install
 %find_lang goocanvas2
+## Remove excluded files
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvas.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasellipse.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasenumtypes.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasgrid.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasgroup.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasimage.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasitem.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasitemmodel.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasitemsimple.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasmarshal.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvaspath.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvaspolyline.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasrect.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasstyle.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvastable.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvastext.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvasutils.h
+rm -f %{buildroot}/usr/include/goocanvas-2.0/goocanvaswidget.h
+rm -f %{buildroot}/usr/lib/python3.9/site-packages/gi/overrides/GooCanvas.py
+rm -f %{buildroot}/usr/lib/python3.9/site-packages/gi/overrides/__pycache__/GooCanvas.cpython-39.pyc
+rm -f %{buildroot}/usr/lib64/girepository-1.0/GooCanvas-2.0.typelib
+rm -f %{buildroot}/usr/lib64/libgoocanvas-2.0.so
+rm -f %{buildroot}/usr/lib64/pkgconfig/goocanvas-2.0.pc
+rm -f %{buildroot}/usr/share/gir-1.0/GooCanvas-2.0.gir
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvas.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasEllipse.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasEllipseModel.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasGrid.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasGridModel.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasGroup.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasGroupModel.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasImage.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasImageModel.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasItem.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasItemModel.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasItemModelSimple.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasItemSimple.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasPath.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasPathModel.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasPolyline.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasPolylineModel.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasRect.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasRectModel.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasStyle.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasTable.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasTableModel.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasText.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasTextModel.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/GooCanvasWidget.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/api-index-2.0.1.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/api-index-2.0.2.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/api-index-full.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/ch01.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/ch02.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/ch03.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/ch04.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/ch05.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/deprecated-api-index.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/goocanvas-architecture.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/goocanvas-coordinates.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/goocanvas-creating-items.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/goocanvas-model-view-canvas.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/goocanvas-overview.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/goocanvas-simple-canvas.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/goocanvas-wysiwyg.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/goocanvas2-GooCanvas-Types.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/goocanvas2.devhelp2
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/home.png
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/index.html
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/left-insensitive.png
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/left.png
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/right-insensitive.png
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/right.png
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/style.css
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/up-insensitive.png
+rm -f %{buildroot}/usr/share/gtk-doc/html/goocanvas2/up.png
 
 %files
 %defattr(-,root,root,-)
-
-%files data
-%defattr(-,root,root,-)
-/usr/lib64/girepository-1.0/GooCanvas-2.0.typelib
-/usr/share/gir-1.0/*.gir
-
-%files dev
-%defattr(-,root,root,-)
-/usr/include/goocanvas-2.0/goocanvas.h
-/usr/include/goocanvas-2.0/goocanvasellipse.h
-/usr/include/goocanvas-2.0/goocanvasenumtypes.h
-/usr/include/goocanvas-2.0/goocanvasgrid.h
-/usr/include/goocanvas-2.0/goocanvasgroup.h
-/usr/include/goocanvas-2.0/goocanvasimage.h
-/usr/include/goocanvas-2.0/goocanvasitem.h
-/usr/include/goocanvas-2.0/goocanvasitemmodel.h
-/usr/include/goocanvas-2.0/goocanvasitemsimple.h
-/usr/include/goocanvas-2.0/goocanvasmarshal.h
-/usr/include/goocanvas-2.0/goocanvaspath.h
-/usr/include/goocanvas-2.0/goocanvaspolyline.h
-/usr/include/goocanvas-2.0/goocanvasrect.h
-/usr/include/goocanvas-2.0/goocanvasstyle.h
-/usr/include/goocanvas-2.0/goocanvastable.h
-/usr/include/goocanvas-2.0/goocanvastext.h
-/usr/include/goocanvas-2.0/goocanvasutils.h
-/usr/include/goocanvas-2.0/goocanvaswidget.h
-/usr/lib64/libgoocanvas-2.0.so
-/usr/lib64/pkgconfig/goocanvas-2.0.pc
-
-%files doc
-%defattr(0644,root,root,0755)
-/usr/share/gtk-doc/html/goocanvas2/GooCanvas.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasEllipse.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasEllipseModel.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasGrid.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasGridModel.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasGroup.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasGroupModel.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasImage.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasImageModel.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasItem.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasItemModel.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasItemModelSimple.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasItemSimple.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasPath.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasPathModel.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasPolyline.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasPolylineModel.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasRect.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasRectModel.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasStyle.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasTable.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasTableModel.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasText.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasTextModel.html
-/usr/share/gtk-doc/html/goocanvas2/GooCanvasWidget.html
-/usr/share/gtk-doc/html/goocanvas2/api-index-2.0.1.html
-/usr/share/gtk-doc/html/goocanvas2/api-index-2.0.2.html
-/usr/share/gtk-doc/html/goocanvas2/api-index-full.html
-/usr/share/gtk-doc/html/goocanvas2/ch01.html
-/usr/share/gtk-doc/html/goocanvas2/ch02.html
-/usr/share/gtk-doc/html/goocanvas2/ch03.html
-/usr/share/gtk-doc/html/goocanvas2/ch04.html
-/usr/share/gtk-doc/html/goocanvas2/ch05.html
-/usr/share/gtk-doc/html/goocanvas2/deprecated-api-index.html
-/usr/share/gtk-doc/html/goocanvas2/goocanvas-architecture.html
-/usr/share/gtk-doc/html/goocanvas2/goocanvas-coordinates.html
-/usr/share/gtk-doc/html/goocanvas2/goocanvas-creating-items.html
-/usr/share/gtk-doc/html/goocanvas2/goocanvas-model-view-canvas.html
-/usr/share/gtk-doc/html/goocanvas2/goocanvas-overview.html
-/usr/share/gtk-doc/html/goocanvas2/goocanvas-simple-canvas.html
-/usr/share/gtk-doc/html/goocanvas2/goocanvas-wysiwyg.html
-/usr/share/gtk-doc/html/goocanvas2/goocanvas2-GooCanvas-Types.html
-/usr/share/gtk-doc/html/goocanvas2/goocanvas2.devhelp2
-/usr/share/gtk-doc/html/goocanvas2/home.png
-/usr/share/gtk-doc/html/goocanvas2/index.html
-/usr/share/gtk-doc/html/goocanvas2/left-insensitive.png
-/usr/share/gtk-doc/html/goocanvas2/left.png
-/usr/share/gtk-doc/html/goocanvas2/right-insensitive.png
-/usr/share/gtk-doc/html/goocanvas2/right.png
-/usr/share/gtk-doc/html/goocanvas2/style.css
-/usr/share/gtk-doc/html/goocanvas2/up-insensitive.png
-/usr/share/gtk-doc/html/goocanvas2/up.png
 
 %files lib
 %defattr(-,root,root,-)
@@ -236,13 +180,6 @@ cp %{_builddir}/goocanvas-2.0.4/COPYING %{buildroot}/usr/share/package-licenses/
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/compat-goocanvas-soname2/bf50bac24e7ec325dbb09c6b6c4dcc88a7d79e8f
-
-%files python
-%defattr(-,root,root,-)
-
-%files python3
-%defattr(-,root,root,-)
-/usr/lib/python3*/*
 
 %files locales -f goocanvas2.lang
 %defattr(-,root,root,-)
